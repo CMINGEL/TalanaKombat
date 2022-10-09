@@ -1,4 +1,3 @@
-from flask import Flask, render_template, redirect, jsonify, request
 from time import sleep
 import json
 
@@ -56,8 +55,11 @@ def quienInicia(Stallone_movimientos,Stallone_golpes,Shuatseneguer_movimientos,S
         golpes_Shuatseneguer+=len(x)
 
     if (movimientos_Shuatseneguer+golpes_Shuatseneguer)==(movimientos_Stallone+golpes_Stallone):
+        print("empate golpes + movimientos")
         if(movimientos_Shuatseneguer==movimientos_Stallone):
+            print("empate movimientos")
             if(golpes_Shuatseneguer==golpes_Stallone):
+                print("empate golpes")
                 return ('Stallone')
             elif(golpes_Shuatseneguer>golpes_Stallone):
                 return ('Stallone')
@@ -65,20 +67,20 @@ def quienInicia(Stallone_movimientos,Stallone_golpes,Shuatseneguer_movimientos,S
                 return ('Shuatseneguer')
 
         elif(movimientos_Shuatseneguer>movimientos_Stallone):
-            return('Stallone')
+            return("Stallone")
         else:
-            return('Shuatseneguer')
+            return("Shuatseneguer")
 
 
     elif((movimientos_Shuatseneguer+golpes_Shuatseneguer)>(movimientos_Stallone+golpes_Stallone)):
-        return('Stallone')
+        return("Stallone")
     else:
-        return('Shuatseneguer')
+        return("Shuatseneguer")
 
 def combate(batalla):
    
-    Stallone=jugador('Stallone', batalla['player1']['movimientos'],batalla['player1']['golpes'])
-    Shuatseneguer=jugador('Shuatseneguer', batalla['player2']['movimientos'],batalla['player2']['golpes'])
+    Stallone=jugador("Stallone", batalla["player1"]["movimientos"],batalla["player1"]["golpes"])
+    Shuatseneguer=jugador("Shuatseneguer", batalla["player2"]["movimientos"],batalla["player2"]["golpes"])
     #print(Shuatseneguer.status())
     #print(Stallone.status())
     bandera=False
@@ -149,28 +151,10 @@ class jugador:
         print(self.vida)
         print(self.golpes)
         print(self.movimientos)
+#----------------------------------------------------------------------------------------------
 
 
-##------------WebApp---------------------------------------------------
-app=Flask(__name__) 
-
-@app.route('/')
-def inicio():
-    #return jsonify("prueba de json")
-    return render_template('index.html')
-
-
-@app.route('/recibebatalla', methods = ['POST', 'GET'])
-def informacion():
-    if request.method == 'POST':
-        info = request.form['info']  
-        info = json.loads(info)
-        context=combate(info)
-        #context="pere"
-    if request.method == 'GET':
-        context='batalla no ingresada correctamentamente'
-    return render_template('batalla.html', context=[*context])
-
-if __name__== '__main__':
-    app.run(host="0.0.0.0", port= 2944, debug=True)
-##--------------------------------------------------------------------
+info = json.loads(input())
+context=combate(info)
+for x in context:
+    print (x)
