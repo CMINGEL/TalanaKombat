@@ -164,9 +164,11 @@ def inicio():
 def informacion():
     if request.method == 'POST':
         info = request.form['info']  
-        info = json.loads(info)
-        context=combate(info)
-        #context="pere"
+        try:
+            info = json.loads(info)
+            context=combate(info)
+        except:
+            context=["Error en la carga de la batalla, por favor intenta cargar un json valido"]
     if request.method == 'GET':
         context='batalla no ingresada correctamentamente'
     return render_template('batalla.html', context=[*context])

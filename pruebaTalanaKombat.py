@@ -153,8 +153,12 @@ class jugador:
         print(self.movimientos)
 #----------------------------------------------------------------------------------------------
 
+try:
+    info = json.loads(input())
+    context=combate(info)
+except:
+    context=["Error en la carga de la batalla, por favor intenta cargar un json valido"]
 
-info = json.loads(input())
-context=combate(info)
+
 for x in context:
     print (x)
